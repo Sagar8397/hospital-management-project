@@ -76,4 +76,46 @@ public class UserServiceImpl implements UserService {
     }
     return userResponse;
   }
+
+  @Override
+  public UserResponse updateUser(Long user_id, UserRequest userRequest) {
+
+    Optional<Users> user = userRepo.findById(user_id);
+
+    if (user == null) {
+      userResponse.setStatus("unsuccess");
+      userResponse.setMessage("User not found");
+    } else {
+      Users userTable =
+          Users.getInstance()
+              .setFirst_name(userRequest.getFirst_name())
+              .setMiddle_name(userRequest.getMiddle_name())
+              .setLast_name(userRequest.getLast_name())
+              .setAddress(userRequest.getAddress())
+              .setDate_of_birth(userRequest.getDate_of_birth())
+              .setEmail_id(userRequest.getEmail_id())
+              .setMobile(userRequest.getMobile())
+              .setHome_phone(userRequest.getHome_phone())
+              .setUser_id(userRequest.getUser_id());
+
+      try {
+        userTable = userRepo.save(userTable);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+
+      userTable = userRepo.save(userTable);
+      userResponse.setStatus("Success");
+      userResponse.setMessage("User updated successfuly");
+    }
+
+    return userResponse;
+  }
+
+  @Override
+  public String deleteEmployee(Long user_id) {
+    userRepo.deleteById(user_id);
+
+    return "user of id " + user_id + " is deleted";
+  }
 }

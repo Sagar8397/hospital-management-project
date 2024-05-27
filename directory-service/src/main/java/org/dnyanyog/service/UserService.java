@@ -10,4 +10,8 @@ public interface UserService {
   public UserResponse addUser(UserRequest userRequest);
 
   public UserResponse getSingleUser(Long user_id);
+
+  public UserResponse updateUser(Long user_id, UserRequest userRequest);
+
+  public String deleteEmployee(Long user_id);
 }
